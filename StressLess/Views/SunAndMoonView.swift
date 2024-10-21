@@ -76,7 +76,7 @@ struct SunAndMoonView: View {
             // Update the current hour every minute
             currentHour = Calendar.current.component(.hour, from: Date())
         }
-        .padding(.top, -400)
+        .padding(.top, -462)
     }
 }
 
