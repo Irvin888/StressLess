@@ -11,7 +11,9 @@ import SwiftUI
 struct StressLessApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+
+                ContentView() // Start with the home page (ContentView)
+
         }
     }
 }
