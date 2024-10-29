@@ -45,11 +45,6 @@
 			path = StressLessUITests;
 			sourceTree = "<group>";
 		};
-		AA4015432CC6068B0014750D /* HW_2 */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = HW_2;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +79,6 @@
 				AA4014D02CBF36F60014750D /* StressLessTests */,
 				AA4014DA2CBF36F60014750D /* StressLessUITests */,
 				AA4014BE2CBF36F50014750D /* Products */,
-				AA4015432CC6068B0014750D /* HW_2 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,7 +109,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				AA4014BF2CBF36F50014750D /* StressLess */,
-				AA4015432CC6068B0014750D /* HW_2 */,
 			);
 			name = StressLess;
 			packageProductDependencies = (
