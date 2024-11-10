@@ -14,7 +14,9 @@ struct BreathingExercise: View {
     @State private var isInhaling = true
     @State private var shapeScale: CGFloat = 1.0
     @State private var timerRunning = false
-    @State private var timeRemaining = 2  // Set to short time for testing
+    @State private var timeRemaining = 8  // Set to a short time for testing
+
+    @Environment(\.scenePhase) private var scenePhase  // Observe app lifecycle changes
 
     // Animation settings
     private let inhaleDuration: Double = 4
@@ -23,7 +25,7 @@ struct BreathingExercise: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background color with gradient for soothing breathing effect
+                // Background gradient changes based on breathing phase (inhale/exhale)
                 LinearGradient(
                     gradient: Gradient(colors: [isInhaling ? .teal : .purple, Color.white]),
                     startPoint: .top,
@@ -43,12 +45,11 @@ struct BreathingExercise: View {
                             .frame(width: 200 * shapeScale, height: 200 * shapeScale)
                             .animation(.easeInOut(duration: isInhaling ? inhaleDuration : exhaleDuration), value: shapeScale)
 
-                        // Timer in the center of the shape
+                        // Timer text in the center of the shape
                         Text("\(timeRemaining) s")
                             .font(.title)
                             .foregroundColor(.white)
                             .onAppear {
-                                // Initialize the breathing animation but do not start until user clicks "Start"
                                 shapeScale = 1.0
                             }
                     }
@@ -58,12 +59,12 @@ struct BreathingExercise: View {
                         }
                     }
 
-                    // Moving Guide Text
+                    // Text indicating whether to "Breathe in..." or "Breathe out..."
                     Text(isInhaling ? "Breathe in..." : "Breathe out...")
                         .font(.largeTitle)
                         .foregroundColor(Color.gray)
                         .padding(.top, -5)
-                        .offset(y: shapeScale * 100 - 100)  // Moves with shape scale
+                        .offset(y: shapeScale * 100 - 100)
 
                     Spacer()
 
@@ -84,12 +85,18 @@ struct BreathingExercise: View {
                             .shadow(radius: 5)
                     }
                     .padding(.bottom, 150)
-
-                    .navigationDestination(isPresented: .constant(timeRemaining <= 0 && !timerRunning)){
+                    .navigationDestination(isPresented: .constant(timeRemaining <= 0 && !timerRunning)) {
                         FeedbackView(userStats: userStats, isOnHomeScreen: $isOnHomeScreen)
                     }
-                
                 }
+            }
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .background {
+                pauseBreathingSession()  // Automatically pause the exercise
+                saveExerciseState()    // Save state when app goes to background
+            } else if scenePhase == .active {
+                loadExerciseState()     // Load saved state when app becomes active again
             }
         }
     }
@@ -106,7 +113,7 @@ struct BreathingExercise: View {
     }
 
     func startBreathingAnimation() {
-        guard timerRunning else { return }
+        guard timerRunning else { return }  // Only run if timer is active
 
         // Toggle between inhale and exhale animations
         withAnimation(.easeInOut(duration: isInhaling ? inhaleDuration : exhaleDuration)) {
@@ -127,6 +134,26 @@ struct BreathingExercise: View {
                 timer.invalidate()
                 timerRunning = false
             }
+        }
+    }
+
+    // MARK: - Save and Load Exercise State
+    func saveExerciseState() {
+        // Save current exercise state to UserDefaults
+        UserDefaults.standard.set(timerRunning, forKey: "BreathingExerciseTimerRunning")
+        UserDefaults.standard.set(timeRemaining, forKey: "BreathingExerciseTimeRemaining")
+        UserDefaults.standard.set(isInhaling, forKey: "BreathingExerciseIsInhaling")
+    }
+
+    func loadExerciseState() {
+        // Load saved exercise state from UserDefaults
+        timerRunning = UserDefaults.standard.bool(forKey: "BreathingExerciseTimerRunning")
+        timeRemaining = UserDefaults.standard.integer(forKey: "BreathingExerciseTimeRemaining")
+        isInhaling = UserDefaults.standard.bool(forKey: "BreathingExerciseIsInhaling")
+
+        // Resume the session if it was running
+        if timerRunning {
+            startBreathingSession()
         }
     }
 }
