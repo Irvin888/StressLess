@@ -52,3 +52,4 @@ struct RechargeOptions_Previews: PreviewProvider {
         RechargeOptions(userStats: mockStats, isOnHomeScreen: .constant(false))
     }
 }
+
