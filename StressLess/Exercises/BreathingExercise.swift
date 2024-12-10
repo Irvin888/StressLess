@@ -164,3 +164,4 @@ struct BreathingExercise_Previews: PreviewProvider {
         BreathingExercise(userStats: mockStats, isOnHomeScreen: .constant(false))
     }
 }
+

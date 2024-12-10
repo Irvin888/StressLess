@@ -1,4 +1,4 @@
-# StressLess
+# StressLess (updated)
 Irvin Zhao
 
 ## Project Summary
