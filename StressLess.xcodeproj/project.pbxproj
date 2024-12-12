@@ -21,12 +21,29 @@
 			remoteGlobalIDString = AA4014BC2CBF36F50014750D;
 			remoteInfo = StressLess;
 		};
+		AAC5CC8D2D0923F7005F2184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4014B52CBF36F50014750D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AAC5CC7A2D0923F4005F2184;
+			remoteInfo = StressLess_Testing;
+		};
+		AAC5CC972D0923F7005F2184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA4014B52CBF36F50014750D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AAC5CC7A2D0923F4005F2184;
+			remoteInfo = StressLess_Testing;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		AA4014BD2CBF36F50014750D /* StressLess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StressLess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4014CD2CBF36F60014750D /* StressLessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StressLessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4014D72CBF36F60014750D /* StressLessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StressLessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAC5CC7B2D0923F4005F2184 /* StressLess_Testing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StressLess_Testing.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAC5CC8C2D0923F7005F2184 /* StressLess_TestingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StressLess_TestingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAC5CC962D0923F7005F2184 /* StressLess_TestingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StressLess_TestingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -69,6 +86,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AAC5CC782D0923F4005F2184 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC892D0923F7005F2184 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC932D0923F7005F2184 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -88,6 +126,9 @@
 				AA4014BD2CBF36F50014750D /* StressLess.app */,
 				AA4014CD2CBF36F60014750D /* StressLessTests.xctest */,
 				AA4014D72CBF36F60014750D /* StressLessUITests.xctest */,
+				AAC5CC7B2D0923F4005F2184 /* StressLess_Testing.app */,
+				AAC5CC8C2D0923F7005F2184 /* StressLess_TestingTests.xctest */,
+				AAC5CC962D0923F7005F2184 /* StressLess_TestingUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,6 +204,65 @@
 			productReference = AA4014D72CBF36F60014750D /* StressLessUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		AAC5CC7A2D0923F4005F2184 /* StressLess_Testing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAC5CC9E2D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_Testing" */;
+			buildPhases = (
+				AAC5CC772D0923F4005F2184 /* Sources */,
+				AAC5CC782D0923F4005F2184 /* Frameworks */,
+				AAC5CC792D0923F4005F2184 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StressLess_Testing;
+			packageProductDependencies = (
+			);
+			productName = StressLess_Testing;
+			productReference = AAC5CC7B2D0923F4005F2184 /* StressLess_Testing.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AAC5CC8B2D0923F7005F2184 /* StressLess_TestingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAC5CCA12D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_TestingTests" */;
+			buildPhases = (
+				AAC5CC882D0923F7005F2184 /* Sources */,
+				AAC5CC892D0923F7005F2184 /* Frameworks */,
+				AAC5CC8A2D0923F7005F2184 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AAC5CC8E2D0923F7005F2184 /* PBXTargetDependency */,
+			);
+			name = StressLess_TestingTests;
+			packageProductDependencies = (
+			);
+			productName = StressLess_TestingTests;
+			productReference = AAC5CC8C2D0923F7005F2184 /* StressLess_TestingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AAC5CC952D0923F7005F2184 /* StressLess_TestingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAC5CCA42D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_TestingUITests" */;
+			buildPhases = (
+				AAC5CC922D0923F7005F2184 /* Sources */,
+				AAC5CC932D0923F7005F2184 /* Frameworks */,
+				AAC5CC942D0923F7005F2184 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AAC5CC982D0923F7005F2184 /* PBXTargetDependency */,
+			);
+			name = StressLess_TestingUITests;
+			packageProductDependencies = (
+			);
+			productName = StressLess_TestingUITests;
+			productReference = AAC5CC962D0923F7005F2184 /* StressLess_TestingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -170,7 +270,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1600;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					AA4014BC2CBF36F50014750D = {
@@ -183,6 +283,17 @@
 					AA4014D62CBF36F60014750D = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = AA4014BC2CBF36F50014750D;
+					};
+					AAC5CC7A2D0923F4005F2184 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					AAC5CC8B2D0923F7005F2184 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = AAC5CC7A2D0923F4005F2184;
+					};
+					AAC5CC952D0923F7005F2184 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = AAC5CC7A2D0923F4005F2184;
 					};
 				};
 			};
@@ -203,6 +314,9 @@
 				AA4014BC2CBF36F50014750D /* StressLess */,
 				AA4014CC2CBF36F60014750D /* StressLessTests */,
 				AA4014D62CBF36F60014750D /* StressLessUITests */,
+				AAC5CC7A2D0923F4005F2184 /* StressLess_Testing */,
+				AAC5CC8B2D0923F7005F2184 /* StressLess_TestingTests */,
+				AAC5CC952D0923F7005F2184 /* StressLess_TestingUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -223,6 +337,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AA4014D52CBF36F60014750D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC792D0923F4005F2184 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC8A2D0923F7005F2184 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC942D0923F7005F2184 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,6 +388,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AAC5CC772D0923F4005F2184 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC882D0923F7005F2184 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AAC5CC922D0923F7005F2184 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -265,6 +421,16 @@
 			isa = PBXTargetDependency;
 			target = AA4014BC2CBF36F50014750D /* StressLess */;
 			targetProxy = AA4014D82CBF36F60014750D /* PBXContainerItemProxy */;
+		};
+		AAC5CC8E2D0923F7005F2184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AAC5CC7A2D0923F4005F2184 /* StressLess_Testing */;
+			targetProxy = AAC5CC8D2D0923F7005F2184 /* PBXContainerItemProxy */;
+		};
+		AAC5CC982D0923F7005F2184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AAC5CC7A2D0923F4005F2184 /* StressLess_Testing */;
+			targetProxy = AAC5CC972D0923F7005F2184 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -512,6 +678,140 @@
 			};
 			name = Release;
 		};
+		AAC5CC9F2D0923F7005F2184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StressLess_Testing/Preview Content\"";
+				DEVELOPMENT_TEAM = 42UX22234B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-Testing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AAC5CCA02D0923F7005F2184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StressLess_Testing/Preview Content\"";
+				DEVELOPMENT_TEAM = 42UX22234B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-Testing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AAC5CCA22D0923F7005F2184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42UX22234B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-TestingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StressLess_Testing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StressLess_Testing";
+			};
+			name = Debug;
+		};
+		AAC5CCA32D0923F7005F2184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42UX22234B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-TestingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StressLess_Testing.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StressLess_Testing";
+			};
+			name = Release;
+		};
+		AAC5CCA52D0923F7005F2184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42UX22234B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-TestingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StressLess_Testing;
+			};
+			name = Debug;
+		};
+		AAC5CCA62D0923F7005F2184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42UX22234B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Irvin.StressLess-TestingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = StressLess_Testing;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -547,6 +847,33 @@
 			buildConfigurations = (
 				AA4014E82CBF36F60014750D /* Debug */,
 				AA4014E92CBF36F60014750D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAC5CC9E2D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_Testing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAC5CC9F2D0923F7005F2184 /* Debug */,
+				AAC5CCA02D0923F7005F2184 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAC5CCA12D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_TestingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAC5CCA22D0923F7005F2184 /* Debug */,
+				AAC5CCA32D0923F7005F2184 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAC5CCA42D0923F7005F2184 /* Build configuration list for PBXNativeTarget "StressLess_TestingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAC5CCA52D0923F7005F2184 /* Debug */,
+				AAC5CCA62D0923F7005F2184 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

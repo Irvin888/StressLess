@@ -43,37 +43,7 @@ struct Login: View {
             }
             
             Button("Enter") {
-                // Validate username and password input
-                guard isValidInput(inputUsername), isValidInput(inputPassword) else {
-                    errorMessage = "Please enter valid username and password."
-                    return
-                }
-                
-                // Check if a new user needs to be created
-                if userProfile.username.isEmpty {
-                    // New user: Confirm password
-                    if !showConfirmPasswordField {
-                        showConfirmPasswordField = true
-                    } else if inputPassword == confirmPassword {
-                        // Set username and hashed password for new user
-                        userProfile.username = inputUsername
-                        userProfile.password = UserProfile.hashPassword(inputPassword)
-                        userProfile.login()
-                        errorMessage = ""
-                        dismiss()
-                    } else {
-                        errorMessage = "Passwords do not match. Please try again."
-                    }
-                } else {
-                    // Existing user: validate credentials
-                    if userProfile.username == inputUsername && userProfile.validatePassword(inputPassword: inputPassword) {
-                        userProfile.login()
-                        errorMessage = ""
-                        dismiss()
-                    } else {
-                        errorMessage = "Incorrect username or password. Please try again."
-                    }
-                }
+                handleLoginOrRegistration()
             }
             .padding()
             .background(Color.blue.opacity(0.2))
@@ -86,5 +56,46 @@ struct Login: View {
     private func isValidInput(_ input: String) -> Bool {
         return !input.trimmingCharacters(in: .whitespaces).isEmpty
     }
+    
+    private func handleLoginOrRegistration() {
+        // Validate username and password input
+        guard isValidInput(inputUsername), isValidInput(inputPassword) else {
+            errorMessage = "Please enter valid username and password."
+            return
+        }
+        
+        if showConfirmPasswordField {
+            // New user: Register
+            if inputPassword == confirmPassword {
+                userProfile.username = inputUsername
+                userProfile.password = UserProfile.hashPassword(inputPassword)
+                
+                // Save user to Core Data
+                userProfile.saveUser()
+                userProfile.login()
+                print("login successful")
+                errorMessage = ""
+                dismiss()
+            } else {
+                errorMessage = "Passwords do not match. Please try again."
+            }
+        } else {
+            // Attempt to fetch user from Core Data
+            if userProfile.fetchUser(byUsername: inputUsername) {
+                // Existing user: Validate password
+                if userProfile.validatePassword(inputPassword: inputPassword) {
+                    userProfile.login()
+                    print("login successful")
+                    errorMessage = ""
+                    dismiss()
+                } else {
+                    errorMessage = "Incorrect username or password. Please try again."
+                }
+            } else {
+                // New user: Prompt for confirmation
+                showConfirmPasswordField = true
+                errorMessage = "New user detected. Please confirm your password."
+            }
+        }
+    }
 }
-

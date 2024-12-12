@@ -27,8 +27,7 @@ struct Profile: View {
                         .cornerRadius(8)
                     
                     Button(action: {
-                        userProfile.logout()
-                        dismiss()
+                        handleLogout()
                     }) {
                         Text("Log Out")
                             .font(.headline)
@@ -52,22 +51,15 @@ struct Profile: View {
                 Spacer()
             }
             .padding()
-            .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Back") {
-                                dismiss()
-                            }
-                        }
-                    }
-            
         }
     }
-}
-
-// MARK: - Preview
-
-struct Profile_Previews: PreviewProvider {
-    static var previews: some View {
-        Profile(userProfile: UserProfile())
+    
+    // MARK: - Logout Handling
+    private func handleLogout() {
+        userProfile.logout()
+        userProfile.username = ""  // Clear username
+        userProfile.password = ""  // Clear password
+        dismiss()
     }
+    
 }

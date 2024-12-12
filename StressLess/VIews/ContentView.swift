@@ -8,64 +8,63 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var userStats = UserStats()
-    @StateObject private var userProfile = UserProfile()
+    @StateObject var userProfile = UserProfile()
     @State private var showRechargeOptions = false
     @State private var showProfile = false
     @State private var showSettings = false
     @State private var isOnHomeScreen = true
-    
+
     var body: some View {
         NavigationView {
             ZStack {
                 DynamicBackgroundView()
                 SunAndMoonView()
-                
+
                 VStack {
                     Spacer()
-                    
-                    if userProfile.isLoggedIn == true {
-                        // Middle Section (Progress Tracking)
+
+                    // Middle section: Show only if logged in and userStats exists
+                    if userProfile.isLoggedIn, let stats = userProfile.userStats {
                         VStack(alignment: .leading, spacing: 30) {
-                            // Recharge Streak with energy icon
+                            // Recharge Streak
                             HStack {
                                 Image(systemName: "battery.100.bolt")
                                     .foregroundColor(.yellow)
                                     .font(.system(size: 22, weight: .medium))
-                                Text("Recharge Streak: \(userStats.rechargeStreak) days")
+                                Text("Recharge Streak: \(stats.rechargeStreak) days")
                                     .font(.system(size: 22, weight: .medium, design: .rounded))
                                     .foregroundColor(.white)
                                     .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
                             }
-                            
-                            // Mood Tracking with heart circle icon
+
+                            // Mood Tracking
                             HStack {
                                 Image(systemName: "heart.circle.fill")
                                     .foregroundColor(.red)
                                     .font(.system(size: 22, weight: .medium))
-                                Text(userStats.moodTrendText)
+                                Text(stats.moodTrendText)
                                     .font(.system(size: 22, weight: .medium, design: .rounded))
                                     .foregroundColor(.white)
                                     .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
                             }
-                            
-                            // Last Recharge Activity with meditative figure icon
+
+                            // Last Recharge Activity
                             HStack {
                                 Image(systemName: "figure.mind.and.body")
                                     .foregroundColor(.blue)
                                     .font(.system(size: 22, weight: .medium))
-                                Text("Last Time: \(userStats.lastRechargeText)")
+                                Text("Last Activity: \(stats.lastRechargeText)")
                                     .font(.system(size: 22, weight: .medium, design: .rounded))
                                     .foregroundColor(.white)
                                     .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
                             }
-                            
-                            // Weekly Summary with red calendar icon
+
+                            // Weekly Summary
                             HStack {
                                 Image(systemName: "calendar.circle.fill")
                                     .foregroundColor(.red)
                                     .font(.system(size: 22, weight: .medium))
-                                Text(userStats.weeklySummaryText)
+                                Text(stats.weeklySummaryText)
                                     .font(.system(size: 22, weight: .medium, design: .rounded))
                                     .foregroundColor(.white)
                                     .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
@@ -74,16 +73,21 @@ struct ContentView: View {
                         .padding(.horizontal, 30)
                         .padding(.top, 40)
                     } else {
-                        Text("Plase login to view your stats.").font(.title)
+                        // User not logged in OR userStats not yet loaded
+                        Text("Please login to view your stats.")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 1)
+                            .padding(.top, 40)
                     }
-                    
+
                     Spacer()
-                    
+
                     // Bottom Section: Navigation Hub (Profile, Recharge Yourself, Settings)
                     HStack {
                         Spacer()
-                        
-                        // Profile Icon with color
+
+                        // Profile: Always accessible
                         VStack(spacing: 12) {
                             Button(action: {
                                 showProfile.toggle()
@@ -100,23 +104,29 @@ struct ContentView: View {
                                 .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.white)
                         }
-                        
+
                         Spacer()
-                        
-                        // Recharge Yourself Icon with color, stacked text
+
+                        // Recharge: Only enabled if logged in and userStats is available
                         VStack(spacing: 12) {
                             Button(action: {
-                                if userProfile.isLoggedIn == true{
+                                if userProfile.isLoggedIn, userProfile.userStats != nil {
                                     isOnHomeScreen = false
                                     showRechargeOptions.toggle()
                                 }
                             }) {
                                 Image(systemName: "bolt.fill")
                                     .font(.system(size: 50))
-                                    .foregroundColor(.green)
+                                    .foregroundColor(userProfile.isLoggedIn && userProfile.userStats != nil ? .green : .gray)
                             }
+                            .disabled(!(userProfile.isLoggedIn && userProfile.userStats != nil))
                             .sheet(isPresented: $showRechargeOptions) {
-                                RechargeOptions(userStats: userStats, isOnHomeScreen: $isOnHomeScreen)
+                                // Safe unwrap again before presenting
+                                if let stats = userProfile.userStats {
+                                    RechargeOptions(userStats: stats, isOnHomeScreen: $isOnHomeScreen)
+                                } else {
+                                    Text("No stats available.")
+                                }
                             }
                             Text("Recharge")
                                 .font(.system(size: 20, weight: .bold))
@@ -125,41 +135,46 @@ struct ContentView: View {
                                 .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.white)
                         }
-                        
+
                         Spacer()
-                        
-                        // Settings Icon with color
+
+                        // Settings: Only enabled if logged in and userStats is available
                         VStack(spacing: 12) {
                             Button(action: {
-                                if userProfile.isLoggedIn == true{
+                                if userProfile.isLoggedIn && userProfile.userStats != nil {
                                     showSettings.toggle()
                                 }
                             }) {
                                 Image(systemName: "gearshape.fill")
                                     .font(.system(size: 50))
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(userProfile.isLoggedIn && userProfile.userStats != nil ? .gray : .gray.opacity(0.4))
                                     .shadow(color: Color.black.opacity(0.3), radius: 2, x: 0, y: 2)
                             }
+                            .disabled(!(userProfile.isLoggedIn && userProfile.userStats != nil))
                             .sheet(isPresented: $showSettings) {
-                                Settings()
+                                // Safe unwrap again before presenting
+                                if let stats = userProfile.userStats {
+                                    Settings(userStats: stats)
+                                } else {
+                                    Text("No stats available.")
+                                }
                             }
                             Text("Settings")
                                 .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.white)
                         }
-                        
+
                         Spacer()
                     }
                     .padding(.bottom, 25)
-                    
                 }
             }
         }
         .onChange(of: isOnHomeScreen) {
-            if  isOnHomeScreen == true {
+            if isOnHomeScreen == true {
                 showRechargeOptions = false
-                }
-           }
+            }
+        }
     }
 }
 
