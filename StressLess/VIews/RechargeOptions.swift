@@ -35,21 +35,6 @@ struct RechargeOptions: View {
                 // Additional activities can be added here in the future
             }
             .navigationTitle("Options")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Back") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
         }
     }
 }
-
-struct RechargeOptions_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockStats = UserStats()
-        RechargeOptions(userStats: mockStats, isOnHomeScreen: .constant(false))
-    }
-}
-

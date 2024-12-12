@@ -1,19 +1,18 @@
-//
-//  FeedbackView.swift
-//  StressLess
-//
-//  Created by Xucheng Zhao on 10/28/24.
-//
-
 import SwiftUI
 
 struct FeedbackView: View {
+    var exercise: String
     @ObservedObject var userStats: UserStats
     @Binding var isOnHomeScreen: Bool
     
+    // New state variables for additional feedback questions
+    @State private var stressLevelBefore: Double = 0
+    @State private var stressLevelAfter: Double = 0
+    @State private var helpfulnessRating: Int = 1
+    @State private var overallExperienceRating: Int = 1
+    
     var body: some View {
         VStack {
-            
             Spacer()
             
             // Top section: Question text
@@ -26,85 +25,89 @@ struct FeedbackView: View {
                 .padding(.bottom, 30) // Add extra space below the question
             
             Spacer() // Push buttons to the middle/lower section
-            
-            // Feedback buttons
-            VStack(spacing: 30) { // Increase space between buttons
-                ForEach(FeedbackOption.allCases, id: \.self) { option in
-                    Button(action: {
-                        submitFeedback(option)
-                    }) {
-                        HStack {
-                            Text(option.emoji)
-                                .font(.title2)
-                                .frame(width: 30, alignment: .leading)
 
-                            Text(option.rawValue)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
-                        .frame(width: 250, height: 50) // Fixed width and height for uniform button size
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [.blue.opacity(0.8), .purple.opacity(0.8)]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(12)
-                        .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
-                    }
-                }
+            // Section for rating stress levels (before and after)
+            VStack(spacing: 20) {
+                Text("Stress level before exercise:")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                
+                Slider(value: $stressLevelBefore, in: 0...10, step: 1)
+                    .accentColor(.blue)
+                    .padding()
+                
+                Text("Stress level after exercise:")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                
+                Slider(value: $stressLevelAfter, in: 0...10, step: 1)
+                    .accentColor(.blue)
+                    .padding()
             }
-            Spacer()
+            
+            // Section for helpfulness and overall experience ratings
+            VStack(spacing: 20) {
+                Text("How helpful was this session in reducing stress?")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                
+                Picker("Helpfulness", selection: $helpfulnessRating) {
+                    Text("Not Helpful").tag(1)
+                    Text("Somewhat Helpful").tag(2)
+                    Text("Very Helpful").tag(3)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                Text("Overall experience:")
+                    .font(.headline)
+                    .foregroundColor(.gray)
+                
+                Picker("Experience", selection: $overallExperienceRating) {
+                    Text("Poor").tag(1)
+                    Text("Neutral").tag(2)
+                    Text("Good").tag(3)
+                    Text("Great").tag(4)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+            }
+            
+            // Submit button
+            Button(action: {
+                submitFeedback()
+            }) {
+                Text("Submit Feedback")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.blue.opacity(0.8), .purple.opacity(0.8)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .cornerRadius(12)
+                    .shadow(color: .purple.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .padding(.bottom, 50)
         }
         .padding(.bottom, 150)
         .navigationBarBackButtonHidden(true)
     }
     
-    private func submitFeedback(_ option: FeedbackOption) {
-        userStats.updateLastRecharge(with: "Breathing Exercise")
-        userStats.incrementWeeklyExerciseCount(for: "Breathing")
-        userStats.adjustStressLevel(feedback: option.rawValue)
-        userStats.resetWeeklyCountsIfNewWeek()
+    private func submitFeedback() {
+        // Calculate the stress change percentage based on user input
+        userStats.calculateStressChangePercentage(S_before: stressLevelBefore, S_after: stressLevelAfter, helpfulness: helpfulnessRating, overallRating: overallExperienceRating)
+        
+        // Update statistics
+        userStats.updateLastRecharge(with: exercise + " Exercise")
+        userStats.incrementWeeklyExerciseCount(for: exercise)
         
         // Set the flag to navigate back to the home screen
         isOnHomeScreen = true
     }
 }
-
-struct FeedbackView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockStats = UserStats()
-        FeedbackView(userStats: mockStats, isOnHomeScreen: .constant(false))
-    }
-}
-
-// Enum to handle feedback options with emoji icons
-enum FeedbackOption: String, CaseIterable {
-    case muchBetter = "     Much Better"
-    case better = "           Better"
-    case same = "           Same"
-    case worse = "           Worse"
-    case muchWorse = "     Much Worse"
-    
-    // Emoji for each feedback option
-    var emoji: String {
-        switch self {
-        case .muchBetter:
-            return "😊"
-        case .better:
-            return "🙂"
-        case .same:
-            return "😐"
-        case .worse:
-            return "😕"
-        case .muchWorse:
-            return "😞"
-        }
-    }
-}
-

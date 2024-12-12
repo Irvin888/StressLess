@@ -6,21 +6,27 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct BreathingExercise: View {
     @ObservedObject var userStats: UserStats
     @Binding var isOnHomeScreen: Bool
+
+    // Removed @State properties for breathing times
+    // Instead, use values from userStats
+
     @State private var navigateToFeedback = false
     @State private var isInhaling = true
     @State private var shapeScale: CGFloat = 1.0
     @State private var timerRunning = false
-    @State private var timeRemaining = 8  // Set to a short time for testing
+    @State private var timeRemaining: Int = 60 // Will be set based on userStats
 
-    @Environment(\.scenePhase) private var scenePhase  // Observe app lifecycle changes
+    @Environment(\.scenePhase) private var scenePhase
 
-    // Animation settings
-    private let inhaleDuration: Double = 4
-    private let exhaleDuration: Double = 5
+    // Animation settings based on userStats
+    private var inhaleDuration: Double { Double(userStats.inhaleTime) }
+    private var exhaleDuration: Double { Double(userStats.exhaleTime) }
+    private var overallDuration: Int { userStats.overallTime }
 
     var body: some View {
         NavigationStack {
@@ -38,18 +44,17 @@ struct BreathingExercise: View {
                 VStack {
                     Spacer()
 
-                    // Expanding/Contracting Shape with Timer
                     ZStack {
                         Circle()
                             .fill(Color.blue.opacity(0.6))
                             .frame(width: 200 * shapeScale, height: 200 * shapeScale)
                             .animation(.easeInOut(duration: isInhaling ? inhaleDuration : exhaleDuration), value: shapeScale)
 
-                        // Timer text in the center of the shape
                         Text("\(timeRemaining) s")
                             .font(.title)
                             .foregroundColor(.white)
                             .onAppear {
+                                timeRemaining = overallDuration
                                 shapeScale = 1.0
                             }
                     }
@@ -59,7 +64,6 @@ struct BreathingExercise: View {
                         }
                     }
 
-                    // Text indicating whether to "Breathe in..." or "Breathe out..."
                     Text(isInhaling ? "Breathe in..." : "Breathe out...")
                         .font(.largeTitle)
                         .foregroundColor(Color.gray)
@@ -68,7 +72,6 @@ struct BreathingExercise: View {
 
                     Spacer()
 
-                    // Start/Pause Button
                     Button(action: {
                         if timerRunning {
                             pauseBreathingSession()
@@ -86,17 +89,19 @@ struct BreathingExercise: View {
                     }
                     .padding(.bottom, 150)
                     .navigationDestination(isPresented: .constant(timeRemaining <= 0 && !timerRunning)) {
-                        FeedbackView(userStats: userStats, isOnHomeScreen: $isOnHomeScreen)
+                        FeedbackView(exercise: "Breathing", userStats: userStats, isOnHomeScreen: $isOnHomeScreen)
                     }
+                    
                 }
             }
         }
+        .onAppear {
+            // Initialize timeRemaining based on userStats
+            timeRemaining = userStats.overallTime
+        }
         .onChange(of: scenePhase) {
             if scenePhase == .background {
-                pauseBreathingSession()  // Automatically pause the exercise
-                saveExerciseState()    // Save state when app goes to background
-            } else if scenePhase == .active {
-                loadExerciseState()     // Load saved state when app becomes active again
+                pauseBreathingSession()
             }
         }
     }
@@ -113,16 +118,15 @@ struct BreathingExercise: View {
     }
 
     func startBreathingAnimation() {
-        guard timerRunning else { return }  // Only run if timer is active
-
-        // Toggle between inhale and exhale animations
+        guard timerRunning else { return }
         withAnimation(.easeInOut(duration: isInhaling ? inhaleDuration : exhaleDuration)) {
             shapeScale = isInhaling ? 1.2 : 0.8
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + (isInhaling ? inhaleDuration : exhaleDuration)) {
-            isInhaling.toggle() // Switch between inhale and exhale
-            if timerRunning { startBreathingAnimation() } // Continue animation if session is running
+            isInhaling.toggle()
+            triggerHapticFeedback(forInhale: isInhaling)
+            if timerRunning { startBreathingAnimation() }
         }
     }
 
@@ -137,31 +141,8 @@ struct BreathingExercise: View {
         }
     }
 
-    // MARK: - Save and Load Exercise State
-    func saveExerciseState() {
-        // Save current exercise state to UserDefaults
-        UserDefaults.standard.set(timerRunning, forKey: "BreathingExerciseTimerRunning")
-        UserDefaults.standard.set(timeRemaining, forKey: "BreathingExerciseTimeRemaining")
-        UserDefaults.standard.set(isInhaling, forKey: "BreathingExerciseIsInhaling")
-    }
-
-    func loadExerciseState() {
-        // Load saved exercise state from UserDefaults
-        timerRunning = UserDefaults.standard.bool(forKey: "BreathingExerciseTimerRunning")
-        timeRemaining = UserDefaults.standard.integer(forKey: "BreathingExerciseTimeRemaining")
-        isInhaling = UserDefaults.standard.bool(forKey: "BreathingExerciseIsInhaling")
-
-        // Resume the session if it was running
-        if timerRunning {
-            startBreathingSession()
-        }
+    func triggerHapticFeedback(forInhale: Bool) {
+        let generator = UIImpactFeedbackGenerator(style: forInhale ? .heavy : .light)
+        generator.impactOccurred()
     }
 }
-
-struct BreathingExercise_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockStats = UserStats()
-        BreathingExercise(userStats: mockStats, isOnHomeScreen: .constant(false))
-    }
-}
-
